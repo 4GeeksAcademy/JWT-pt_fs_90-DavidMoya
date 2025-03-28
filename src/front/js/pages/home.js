@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useEffect } from "react";
+import { useNavigate} from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+    useEffect(()=>{
+        if (!token){
+            navigate("/login", { replace: true })
+        }
+    },[token,navigate])
+
+    return (
+        <div className="text-center mt-5">
+            <h1>Bienvenido</h1>
+            <p>
+                <img src={rigoImageUrl} />
+            </p>
+        </div>
+    );
 };
